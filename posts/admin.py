@@ -1,20 +1,31 @@
 from django.contrib import admin
 from .models import Article
+# Register your models here.
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    fieldsets = [
+    fieldsets = (
         (None, {
-            'fields': ('titel', 'author')
+            "fields" : ("title","author", "slug", "image")
         }),
-        ('Important dates', {
-            'fields': ('created', 'edited')
+        ("Important dates", {
+            "fields" : ("created", "edited")
         }),
-        ('Content', {
-            'fields': ('content',)
+        ("Conetnt", {
+            "fields" : ("content", "status")
         })
-    ]
-    readonly_fields = ('created', 'edited')
-    list_display = ('titel', 'author', 'status')
-    list_filter = ('status',)
-    search_fields = ('titel', 'author__username')
+    )
+    
+    readonly_fields = ("created", "edited", "slug")
+
+    list_display = ["title", "author", "status"]
+    list_filter = ("status",)
+    search_fields = ("title", "author__username")
+
+
+# class ArticleAdmin(admin.ModelAdmin):
+#     list_display = ["title", "author", "status"]
+#     list_filter = ("status",)
+#     search_fields = ("title", "author__username")
+
+# admin.site.register(Article, ArticleAdmin)
